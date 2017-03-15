@@ -5,9 +5,9 @@ class CServer
 {
 public:
 	bool initServer(int argc, char * argv[]);
-	void insertData(const char name[], int score);
+	void insertData(const char name[], int score, int time);
 	void deleteData(const char name[]);
-	void updateData(const char name[], int score);
+	void updateData(const char name[], int score, int time);
 	int findData(const char name[]);
 	static CServer* getInstance();
 

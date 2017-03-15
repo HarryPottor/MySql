@@ -25,12 +25,15 @@ int main(int argc, char *argv[])
 		cout << "input name: ";
 		getline(cin, name);
 		int score;
+		int time;
 		switch (state)
 		{
 		case 1:
 			cout << "input score : ";
 			cin >> score;
-			server->insertData(name.c_str(), score);
+			cout << "input time : ";
+			cin >> time;
+			server->insertData(name.c_str(), score, time);
 			break;
 		case 2:
 			server->deleteData(name.c_str());
@@ -38,7 +41,9 @@ int main(int argc, char *argv[])
 		case 3:
 			cout << "input score : ";
 			cin >> score;
-			server->updateData(name.c_str(), score);
+			cout << "input time : ";
+			cin >> time;
+			server->updateData(name.c_str(), score, time);
 			break;
 		case 4:
 			server->findData(name.c_str());

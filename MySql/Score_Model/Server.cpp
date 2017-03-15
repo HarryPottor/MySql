@@ -39,10 +39,10 @@ bool CServer::initServer(int argc, char * argv[])
 	return true;
 }
 
-void CServer::insertData(const char name[], int score)
+void CServer::insertData(const char name[], int score, int time)
 {
 	memset(&msg, 0, sizeof(msg));
-	sprintf(msg, "insert %s %d end", name, score);
+	sprintf(msg, "insert %s %d %d end", name, score, time);
 	sendMsg(msg);
 }
 
@@ -54,10 +54,10 @@ void CServer::deleteData(const char name[])
 	
 }
 
-void CServer::updateData(const char name[], int score)
+void CServer::updateData(const char name[], int score, int time)
 {
 	memset(&msg, 0, sizeof(msg));
-	sprintf(msg, "update %s %d end", name, score);
+	sprintf(msg, "update %s %d %d end", name, score, time);
 	sendMsg(msg);
 }
 
@@ -73,8 +73,21 @@ int CServer::findData(const char name[])
 	*/
 	char buf[100];
 	int len = recv(m_pSocket, buf, 100, 0);
+	
 	buf[len] = 0;
-	cout << "receive : " << atoi(buf) << endl;
+	cout << "receive from serv: " << buf << endl;
+	int arr[2];
+	int index = 0;
+	for (int i = 0, j = 0; i <= strlen(buf); i++)
+	{
+		if (buf[i] == ' ' || buf[i] == '\0')
+		{
+			arr[j++] = atoi(buf + index);
+			index = i + 1;
+		}
+	}
+
+	cout << "receive : " << arr[0] << " and " << arr[1] << endl;
 
 	return 0;
 }

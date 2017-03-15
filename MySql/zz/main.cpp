@@ -1,9 +1,36 @@
 #include <iostream>
 using namespace std;
 #include <string>
+
+void GetData(const char arr[], char ch, int len)
+{
+	int first = 0;
+	int tar[10] = { 0 };
+	int j = 0;
+
+	for (int i = 0; i <= len; i++)
+	{
+		if (arr[i] == ch || arr[i] =='\0')
+		{
+			tar[j++] = atoi(arr+first);
+			first = i+1;
+		}
+	}
+
+	for (int i = 0; i < 10; i++)
+	{
+		cout << tar[i] << endl;
+	}
+}
+
+
 int main()
 {
 	char name[20];
+	string msg;
+	getline(cin, msg);
+	GetData(msg.c_str(), ' ', msg.size());
+
 	int age;
 	/*
 	cout << "name : ";
@@ -23,7 +50,7 @@ int main()
 		cout << "nn : ";
 		cin >> nn;
 	}
-*/
+
 
 	cin >> name;
 	if (!strcmp(name, "quit"))
@@ -33,7 +60,7 @@ int main()
 	else
 		cout << "different" << endl;
 
-
+*/
 	system("pause");
 	return 0;
 }
