@@ -18,8 +18,12 @@ int main(int argc, char *argv[])
 	string name;
 	while (true)
 	{
-		cout << "input state (1 insert,2 delete,3 update,4 find): ";
+		cout << "input state (1 insert,2 delete,3 update,4 find, 0 to quit): ";
 		cin >> state;
+		if (state == 0)
+		{
+			break;
+		}
 		cin.clear();
 		cin.ignore();
 		cout << "input name: ";
@@ -54,7 +58,6 @@ int main(int argc, char *argv[])
 		}
 
 	}
-
 
 	system("pause");
 	return 0;
