@@ -1,6 +1,8 @@
 #include "Server.h"
 #include <iostream>
 #include <process.h>
+#include <sstream>
+#include <string>
 using namespace std;
 CServer* CServer::m_pServer = NULL;
 
@@ -67,15 +69,15 @@ int CServer::findData(const char name[])
 	sprintf(msg, "find %s end", name);
 	sendMsg(msg);
 
-	/*
-	HANDLE recvHandle;
-	recvHandle = (HANDLE)_beginthreadex(NULL, 0, ReceiveMain, (void*)m_pSocket, 0, NULL);
-	*/
 	char buf[100];
 	int len = recv(m_pSocket, buf, 100, 0);
-	
 	buf[len] = 0;
-	cout << "receive from serv: " << buf << endl;
+
+	if (buf[0] == '!')
+	{
+		cout << "receive from serv: " << buf << endl;
+		return -1;
+	}
 	int arr[2];
 	int index = 0;
 	for (int i = 0, j = 0; i <= strlen(buf); i++)
@@ -90,6 +92,41 @@ int CServer::findData(const char name[])
 	cout << "receive : " << arr[0] << " and " << arr[1] << endl;
 
 	return 0;
+}
+
+void CServer::getAllData()
+{
+	memset(&msg, 0, sizeof(msg));
+	sprintf(msg, "getall end");
+	sendMsg(msg);
+	
+	char buf[1024];
+	int len = recv(m_pSocket, buf, 100, 0);
+	buf[len] = '\0';
+	if (buf[0] == '!')
+	{
+		cout << "receive from serv: " << buf << endl;
+		return;
+	}
+	DataStruct * ds = getStructData(buf);
+}
+
+void CServer::getOneData()
+{
+	memset(&msg, 0, sizeof(msg));
+	sprintf(msg, "getone end");
+	sendMsg(msg);
+
+	char buf[100];
+	int len = recv(m_pSocket, buf, 100, 0);
+	buf[len] = '\0';
+	if (buf[0] == '!')
+	{
+		cout << "receive from serv: " << buf << endl;
+		return;
+	}
+
+	DataStruct * ds = getStructData(buf);
 }
 
 CServer * CServer::getInstance()
@@ -124,6 +161,44 @@ CServer::~CServer()
 void CServer::sendMsg(char * msg)
 {
 	send(m_pSocket, msg, strlen(msg), 0);
+}
+
+DataStruct * CServer::getStructData(char * msg)
+{
+	string command = msg;
+	stringstream stream(command);
+	int max = 0;
+	string arr[30] = { "\0" };
+	while (stream >> arr[max++])
+	{
+	}
+
+	int dslen = (max - 1) / 3;
+	DataStruct *ds = new DataStruct[dslen];
+	int index = 0;
+	for (int i = 0; i < max - 1; i++)
+	{
+		index = i / 3;
+		switch (i % 3)
+		{
+		case 0:
+			ds[index].name = arr[i];
+			break;
+		case 1:
+			ds[index].score = atoi(arr[i].c_str());
+			break;
+		case 2:
+			ds[index].time = atoi(arr[i].c_str());
+			break;
+		}
+	}
+
+	for (int i = 0; i < dslen; i++)
+	{
+		cout << ds[i].name <<  " " << ds[i].score <<  " " << ds[i].time << endl;
+	}
+
+	return ds;
 }
 
 unsigned WINAPI ReceiveMain(void * arg)

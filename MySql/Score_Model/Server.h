@@ -1,5 +1,13 @@
 #pragma once
 #include <WinSock2.h>
+#include <string>
+struct DataStruct
+{
+	std::string name;
+	int score;
+	int time;
+};
+
 
 class CServer
 {
@@ -9,7 +17,10 @@ public:
 	void deleteData(const char name[]);
 	void updateData(const char name[], int score, int time);
 	int findData(const char name[]);
+	void getAllData();
+	void getOneData();
 	static CServer* getInstance();
+
 
 	void setScore(int);
 	int getScore();
@@ -21,6 +32,7 @@ private:
 	char msg[100];
 	int score;
 	void sendMsg(char * msg);
+	DataStruct* getStructData(char * msg);
 	//unsigned WINAPI ReceiveMain(void* arg );
 };
 

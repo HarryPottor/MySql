@@ -18,16 +18,19 @@ int main(int argc, char *argv[])
 	string name;
 	while (true)
 	{
-		cout << "input state (1 insert,2 delete,3 update,4 find, 0 to quit): ";
+		cout << "input state (1 insert,2 delete,3 update,4 find, 5 getall, 6 getone, 0 to quit): ";
 		cin >> state;
+		cin.clear();
+		cin.ignore();
 		if (state == 0)
 		{
 			break;
 		}
-		cin.clear();
-		cin.ignore();
-		cout << "input name: ";
-		getline(cin, name);
+		if (state < 5)
+		{
+			cout << "input name: ";
+			getline(cin, name);
+		}
 		int score;
 		int time;
 		switch (state)
@@ -53,6 +56,11 @@ int main(int argc, char *argv[])
 			server->findData(name.c_str());
 			//cout << name << " : " << server->getScore() << endl;
 			break;
+		case 5:
+			server->getAllData();
+			break;
+		case 6:
+			server->getOneData();
 		default:
 			break;
 		}

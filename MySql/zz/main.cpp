@@ -1,7 +1,7 @@
 #include <iostream>
-using namespace std;
-#include <string>
 
+#include <string>
+using namespace std;
 void GetData(const char arr[], char ch, int len)
 {
 	int first = 0;
@@ -26,12 +26,15 @@ void GetData(const char arr[], char ch, int len)
 
 int main()
 {
+	/*
 	char name[20];
 	string msg;
 	getline(cin, msg);
 	GetData(msg.c_str(), ' ', msg.size());
 
 	int age;
+	*/
+
 	/*
 	cout << "name : ";
 	cin >> name;
@@ -61,6 +64,27 @@ int main()
 		cout << "different" << endl;
 
 */
+
+	/*
+	string  msg = "";
+	char *data[] = {
+		"hello", "123", "321"
+	};
+	for (int i = 0; i < 3; i++)
+	{
+		msg = msg + data[i] + " ";
+	}
+
+
+	cout << msg << endl;
+	*/
+
+	int num = rand();
+	while (true)
+	{
+		cout << rand() << endl;
+	}
+
 	system("pause");
 	return 0;
 }
